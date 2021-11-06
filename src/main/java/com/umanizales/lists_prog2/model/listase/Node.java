@@ -15,7 +15,7 @@ public class Node {
      * null
      * @param data Parametro en el cual se obtienen todos los datos del niño
      */
-    public Node(Boy data) {
-        this.data = data;
-    }
+    public Node(Boy data) {this.data = data;}
 }
+
+

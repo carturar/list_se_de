@@ -12,8 +12,8 @@ import javax.validation.constraints.NotNull;
  * Ejemplo2: code:16917 description:Caldas
  * Ejemplo3: code:16917001 description: Manizales
  * @author Carlos Loaiza
+ * @author Carlos Arias
  */
-
 @Data
 @AllArgsConstructor
 public class Location {

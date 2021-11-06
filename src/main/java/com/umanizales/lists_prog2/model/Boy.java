@@ -11,15 +11,18 @@ import javax.validation.constraints.Size;
 
 /**
  * Clase para almacenar la información referente a un niño
- * Maneja campos obligatorios para (identificación, edad, ...
+ * Maneja campos obligatorios para (identificación, nombre, edad, genero y locacion
  * @autor Carlos Loaiza
- * @author Lucas López
+ * @author Carlos Arias
  * @version 1.0 - 30-oct-2021
  *
  */
-
 @Data
 @AllArgsConstructor
+/**
+ * clase para manejar todos los atributos del niño para ser utilizados en los metodos
+ * contiene unas restricciones para que se cite los campos obligatorios
+ */
 public class Boy {
     @NotNull
     @NotEmpty
@@ -32,8 +35,11 @@ public class Boy {
     @Positive
     private byte age;
     @NotNull
-    private Gender gender;
+    public Gender1 gender;
     @Valid
     @NotNull
     private Location location;
+    @NotNull
+    private Degree degree;
+
 }
