@@ -10,14 +10,15 @@ import com.umanizales.lists_prog2.exception.ListaDeException;
 
 
 import com.umanizales.lists_prog2.exception.ListaSeException;
-import com.umanizales.lists_prog2.model.Boy;
-import com.umanizales.lists_prog2.model.listade.ListaDE;
+import com.umanizales.lists_prog2.model.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.SneakyThrows;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.umanizales.lists_prog2.model.Gender.FEMENINO;
+import static com.umanizales.lists_prog2.model.Gender.MASCULINO;
 
 
 @Data
@@ -34,56 +35,57 @@ public class ListaDE {
 
     /**
      * Metodo que adiciona un niño al final de la lista
+     *
      * @param boy es el parametro que estamos usando
      * @throws ListaDeException metodo para expresar el mensaje o exepcion
      */
-    public void add(Boy boy) throws ListaDeException
-    {
+    public void addDe(Boy boy) throws ListaDeException {
         /**
          * si la cabeza esta vacia
          */
-        Boy boyExist = findByIdentification(boy.getIdentification());
-        if(boyExist !=null) {
+        Boy boyExist = findByIdentificationDe(boy.getIdentification());
+        if (boyExist != null) {
             /**
              * Si el niño ya existe se envia un mensaje al usuario
              * para que sepa que ya existe la identificaion ingresada
              */
-          throw new ListaDeException("La identificación ingresada ya existe");
+            throw new ListaDeException("La identificación ingresada ya existe");
         }
         /**
          * si la cabeza esta vacia el nuevo niño es la cabeza
          */
-          if (this.head == null) {
-              this.head = new Node(boy);
-          } else {
-              /**
-               * Cómo no me puedo mover de la cabeza porque se me vuelan todos los niños,
-               * LLamo a un ayudante y lo ubico en la cabeza o inicio
-               */
-             Node temp = this.head;
-             while (temp.getNext() != null) {
-             /**
-             * el ayudante se pasa al siguiente
+        if (this.head == null) {
+            this.head = new Node(boy);
+        } else {
+            /**
+             * Cómo no me puedo mover de la cabeza porque se me vuelan todos los niños,
+             * LLamo a un ayudante y lo ubico en la cabeza o inicio
              */
-             temp = temp.getNext();
-             }
-              /**
-               * quedo parado en el ultimo y le digo a siguiente
-               * que tome a vacio y al anterior que tome al ayudante
-               */
-             Node newBoy = new Node(boy);
-             temp.setNext(new Node(boy));
-             newBoy.setPrevious(temp);
-       }
-       count ++;
-  }
+            Node temp = this.head;
+            while (temp.getNext() != null) {
+                /**
+                 * el ayudante se pasa al siguiente
+                 */
+                temp = temp.getNext();
+            }
+            /**
+             * quedo parado en el ultimo y le digo a siguiente
+             * que tome a vacio y al anterior que tome al ayudante
+             */
+            temp.setNext(new Node(boy));
+            temp.getNext().setNext(temp);
+        }
+        count++;
+    }
+
     /**
      * Método que me busca en la lista simplemente enlazada, un niño a partir de la identificación
      * Si no encuentra el niño retorna vacío (null)
+     *
      * @param identification Cédula, TI, CE , Sisben que identifica el niño que voy a buscar
      * @return El niño que encontré con todos sus datos
      */
-    public Boy findByIdentification(String identification) {
+    public Boy findByIdentificationDe(String identification) {
         /**
          * Cómo no me puedo mover de la cabeza porque se me vuelan todos los niños,
          * LLamo a un ayudante y lo ubico en la cabeza o inicio
@@ -115,27 +117,41 @@ public class ListaDE {
          */
         return null;
     }
+
     /**
      * metodo por el cual validaremos que la lista este vacia
+     *
      * @throws ListaDeException
      */
-    public void validateListEmpty() throws ListaDeException
-    {
+    public void validateListEmptyDe() throws ListaDeException {
         /**
          * si en la cabeza o inicio de la lista es igual a vacio (null)
          */
-        if (this.head == null)
-        {
+        if (this.head == null) {
             /**
              * generamos el mensaje de exepcion para indicarle al usuario que la lista esta vacia
              */
             throw new ListaDeException("No hay datos en la lista");
         }
     }
+
+    public List<Boy> listDe() throws ListaDeException {
+        if (this.head != null) {
+            Node temp = this.head;
+            List<Boy> list = new ArrayList<>();
+            while (temp != null) {
+                list.add(temp.getData());
+                temp = temp.getNext();
+            }
+            return list;
+        }
+        throw new ListaDeException("No hay datos en la lista");
+    }
+
     /**
      * creamos una variable llamada contador el cual contendra nuemeros enteros para guardar la cantidad de niños
      */
-    public int count() {
+    public int countDe() {
         /**
          * iniciamos el contador en cero
          */
@@ -144,12 +160,12 @@ public class ListaDE {
          * si en la cabeza hay algo y no esta vacia iniciamos el ciclo
          */
         if (this.head != null) {
-
             // Recorrer la lista principal de principio a fin
             /**
              * Cómo no me puedo mover de la cabeza porque se me vuelan todos los niños,
              * LLamo a un ayudante y lo ubico en la cabeza o inicio
              */
+            ListaDE listTemp = new ListaDE();
             Node temp = this.head;
             /**
              * mientras el ayudante no vea que el brazo este vacio sigue recorriendo la lista
@@ -173,18 +189,17 @@ public class ListaDE {
 
     /**
      * metodo por el cual agregamos un nuedo nodo o niño a la lista en el inicio de la lista
+     *
      * @param boy
      * @throws ListaDeException
      */
-    public void addToStart (Boy boy) throws ListaDeException
-    {
+    public void addToStartDe(Boy boy) throws ListaDeException {
         /**
          * Se invoca al metodo encontrar por identificacion, para saber
          * si el niño que se esta ingresando ya existe
          */
-        Boy boyExist = findByIdentification(boy.getIdentification());
-        if (boyExist !=null)
-        {
+        Boy boyExist = findByIdentificationDe(boy.getIdentification());
+        if (boyExist != null) {
             /**
              * generamos el mensaje donde le indicamos al usuario que el niño con esa identificacion ya existe
              */
@@ -193,16 +208,13 @@ public class ListaDE {
         /**
          * si la cabeza esta vacia
          */
-        if (this.head == null)
-        {
+        if (this.head == null) {
             /**
              * el nuevo dato que se esta ingresando sera la cabeza o inicio de la lista
              */
             this.head = new Node(boy);
             this.head.setPrevious(null);
-        }
-        else
-        {
+        } else {
             /**
              * el ayudante tomara al nuevo nodo y ara que el nuevo nodo tome a la cabeza
              * por lo cual el nuevo nodo sera la cabeza
@@ -210,26 +222,25 @@ public class ListaDE {
             Node temp = new Node(boy);
             temp.setNext(this.head);
             this.head = temp;
-            this.head.setPrevious(null);
+            this.head.setPrevious(head);
         }
         count++;
     }
 
     /**
      * metodo por el caul agregaremos un nodo en una posicion dada
+     *
      * @param boy
      * @param positon
      * @throws ListaDeException
      */
-    public void addByPosition(Boy boy, int positon) throws ListaDeException
-    {
+    public void addByPositionDe(Boy boy, int positon) throws ListaDeException {
         /**
          * Se invoca al metodo encontrar por identificacion, para saber
          * si el niño que se esta ingresando ya existe
          */
-        Boy boyExist = findByIdentification(boy.getIdentification());
-        if (boyExist != null)
-        {
+        Boy boyExist = findByIdentificationDe(boy.getIdentification());
+        if (boyExist != null) {
             /**
              * generamos el mensaje donde le indicamos al usuario que el niño con esa identificacion ya existe
              */
@@ -238,23 +249,16 @@ public class ListaDE {
         /**
          * validamos la posicion verificando que si este esa posicion en la lista
          */
-        if (positon > count)
-        {
-            /**
-             * generamos un mensaje de alerta indicandole al usuario que la posicion en la cual quiere
-             * adicionar el nodo no existe
-             */
-            throw new ListaDeException("La posición ingresada no es válida");
+        if (positon > count) {
+            this.addDe(boy);
+            return;
         }
         /**
          * si la posicion es la primera metermoes el nodo en la cabeza de la lista
          */
-        if (positon ==1)
-        {
-            addToStart(boy);
-        }
-        else
-        {
+        if (positon == 1) {
+            addToStartDe(boy);
+        } else {
             /**
              * Cómo no me puedo mover de la cabeza porque se me vuelan todos los niños,
              * LLamo a un ayudante y lo ubico en la cabeza o inicio
@@ -265,13 +269,11 @@ public class ListaDE {
             /**
              * mientras el ayudante no vea que el siguiente sea vacio
              */
-            while (temp != null)
-            {
+            while (temp != null) {
                 /**
                  * si se valida que el contador queda en una posicion negativa se rompe el ciclo
                  */
-                if (cont == positon -1)
-                {
+                if (cont == positon - 1) {
                     break;
                 }
                 /**
@@ -287,14 +289,17 @@ public class ListaDE {
              * mi ayudante va a estar posicionado en la posicion anterior y adicionara el nodo
              * en el brazo siguiente y el anterior tomara al ayudante
              */
-           Node nodeNew = new Node(boy);
+            Node nodeNew = new Node(boy);
+            nodeNew.setNext(temp.getNext());
             temp.setNext(this.head);
-            this.head = temp;
-            this.head.setPrevious(null);
+            nodeNew.getNext().setPrevious(nodeNew);
+            nodeNew.setPrevious(temp);
             count++;
         }
     }
-    public void invert() throws ListaDeException {
+
+    public void invertDe() throws ListaDeException {
+        validateListEmptyDe();
         /**
          * preguntamos si en la cabeza hay algo y no esta vacia iniciamos el ciclo
          */
@@ -309,7 +314,6 @@ public class ListaDE {
              * LLamo a un ayudante y lo ubico en la cabeza o inicio
              */
             Node temp = this.head;
-
             /**
              * mientras el ayudante no vea que el brazo este vacio sigue recorriendo la lista
              */
@@ -317,7 +321,7 @@ public class ListaDE {
                 /**
                  *en la lista temporal colocaremos al inicio el dato que tiene el ayudante
                  */
-                listTemp.addToStart(temp.getData());
+                listTemp.addToStartDe(temp.getData());
                 /**
                  * el ayudante pasa al siguiente
                  */
@@ -332,34 +336,31 @@ public class ListaDE {
 
     /**
      * Método que me permita eliminar un niño dada una posición
+     *
      * @param boy
      * @param position
      * @throws ListaDeException
      */
-    public void deleteByPosition(Boy boy, int position) throws ListaDeException
-    {
+    public void deleteByPositionDe(Boy boy, int position) throws ListaDeException {
         /**
          * Validación de la posicíon, si la posición que se ingresó es mayor a mi contador
          */
-        if(position > count)
-        {
-            this.add(boy);
+        if (position > count) {
+            this.addDe(boy);
             return;
             //throw  new ListaSeException("La posición ingresada no es válida");
         }
         /**
          * en caso de que sea la posición 1, es decir la cabeza
          */
-        if(position == 1) // en caso de que sea la posición 1, es decir la cabeza
+        if (position == 1) // en caso de que sea la posición 1, es decir la cabeza
         {
             this.head = null;
-        }
-        else
-        {
+        } else {
             /**
              * inicio mi contador en 1 porque si entró acá quiere decir que por lo menos hay uno
              */
-            int cont=1;
+            int cont = 1;
             /**
              * Creo mi ayudante y lo paro en la cabeza
              */
@@ -367,14 +368,12 @@ public class ListaDE {
             /**
              * Le indicamos al ayudante  que recorra la lista hasta que este vacia
              */
-            while(temp!=null)
-            {
-                if(count == position-1 )
-                {
+            while (temp != null) {
+                if (count == position - 1) {
                     /**
                      * pongo a mi ayudante a apuntar al siguiente de su siguiente
                      */
-                    temp= temp.getNext().getNext();
+                    temp = temp.getNext().getNext();
                     /**
                      *  a su previous le digo que tome a mi ayudante
                      */
@@ -387,67 +386,61 @@ public class ListaDE {
                     /**
                      * sino incremente mi ayudante para que entre a nueva iteración
                      */
-                    count++;}
-
+                    count++;
+                }
             }
 
         }
     }
+
     /**
      * Método creado para listar los niños de un género que me ingresan
+     *
      * @param gender entra como parámetro para listar los niños del género
      * @return // retorna el listado de niños que pertenecen a ese género
      * @throws ListaDeException
      */
-    public ListaDE getListDeBoysByGender(String gender) throws ListaDeException
-    {
-        validateListEmpty();
-        Node temp= this.head;
+    public ListaDE getListDeBoysByGenderDe(Gender gender) throws ListaDeException {
+        validateListEmptyDe();
+        Node temp = this.head;
         ListaDE listTemp = new ListaDE();
-        while(temp !=null)
-        {
-            if(temp.getData().getGender().getCode().equals(gender))
-
-            {
-                listTemp.add(temp.getData());
+        while (temp != null) {
+            if (temp.getData().getGender().equals(gender)) {
+                listTemp.addDe(temp.getData());
             }
             temp = temp.getNext();
         }
         return listTemp;
     }
-    public void variantBoys() throws ListaDeException
-    {
-        validateListEmpty(); // valido que en mi lista existan datos
-        ListaDE kids= this.getListDeBoysByGender("MASCULINO");
-        ListaDE girls= this.getListDeBoysByGender("FEMENINO");
-        ListaDE minList= null;
-        ListaDE maxList= null;
-        if(kids.getCount()> girls.getCount())
-        {
-            minList= girls;
+
+    public void variantBoys() throws ListaDeException {
+        validateListEmptyDe(); // valido que en mi lista existan datos
+        ListaDE kids = this.getListDeBoysByGenderDe(MASCULINO);
+        ListaDE girls = this.getListDeBoysByGenderDe(FEMENINO);
+        ListaDE minList = null;
+        ListaDE maxList = null;
+        if (kids.getCount() > girls.getCount()) {
+            minList = girls;
             maxList = kids;
-        }
-        else
-        {
+        } else {
             minList = kids;
             maxList = girls;
         }
-        Node temp= minList.getHead();
-        int pos=2;
-        while(temp != null)
-        {
-            maxList.addByPosition(temp.getData(), pos);
-            pos = pos +2;
+        Node temp = minList.getHead();
+        int pos = 2;
+        while (temp != null) {
+            maxList.addByPositionDe(temp.getData(), pos);
+            pos = pos + 2;
             temp = temp.getNext();
         }
-        this.head= maxList.getHead();
+        this.head = maxList.getHead();
     }
-    public void deleteByGender (String code)throws ListaDeException
-    {
+
+    public void deleteByGenderDe(Gender gender) throws ListaDeException {
         /**
          * llamamos el metodo par validar si la lista esta vacia
          */
-        validateListEmpty();
+        validateListEmptyDe();
         /**
          * si la cabeza es diferente a vacio llamo al ayudante para empezar a recorrer la lista
          */
@@ -464,13 +457,13 @@ public class ListaDE {
             /**
              * validamos si el ayudante con el dato y el genero que trae es el genero del niño
              */
-            if(temp.getData().getGender().getCode().equals(code));
+            if (temp.getData().getGender().equals(gender)) ;
             {
                 /**
                  * eliminamos el dato con el genero para eliminar el niño
                  */
-                delete(temp.getData().getIdentification());
-                temp =temp.getNext().getNext();
+                deleteDe(temp.getData().getIdentification());
+                temp = temp.getNext().getNext();
                 temp.getNext().setPrevious(temp);
             }
             /**
@@ -483,7 +476,8 @@ public class ListaDE {
          */
         throw new ListaDeException("la lista esta vacia");
     }
-    public void delete(String identification) throws ListaDeException {
+
+    public void deleteDe(String identification) throws ListaDeException {
         if (this.head != null)
         {
             if(this.head.getData().getIdentification().equals(identification))
@@ -517,14 +511,44 @@ public class ListaDE {
             throw  new ListaDeException("No hay datos en la lista");
         }
     }
+  public void deleteSuicide (String identification) throws ListaDeException
+  {
+      if (this.head != null){
+          if (this.head.getData().getIdentification().equals(identification)){
+              this.head = this.head.getNext();
+              if (this.head != null){
+                  this.head.setPrevious(null);
+              }
+              count--;
+          }else {
+              Node temp = this.head;
+              while (temp != null){
+                  if (temp != null && temp.getData().getIdentification().equals(identification)){
+                      temp.getPrevious().setNext(temp.getNext());
+                      if(temp.getNext() != null){
+                          temp.getNext().setPrevious(temp.getPrevious());
+                      }
+                      count--;
+                      break;
+                      }
+                  temp = temp.getNext();
+                  }
+              if (temp == null){
+                  throw new ListaDeException("La identificacion "+ identification + "no existe");
+              }
+            }
+          }else {
+          throw new ListaDeException("No hay datos en la lisata");
+      }
+  }
     /**
      * Método que recibe el código de una ciudad y retorna la cantidad de niños
      * @param code entra como parámetro con el código que identifica la ciudad
      * @return me retorna el contador con la cantidad de datos obtenidos en el método
      **/
-    public int getCountBoysByLocation(String code)
+    public int getCountBoysByLocationDe(String code)
     {
-        Node temp= this.getHead();
+        Node temp= this.head;
         int count=0;
         while(temp != null)
         {
@@ -536,7 +560,7 @@ public class ListaDE {
         }
         return count;
     }
-    public void changeXtremes() throws  ListaDeException{
+    public void changeXtremesDe() throws  ListaDeException{
         if (this.head != null && this.head.getNext() != null) {
             Boy start = this.head.getData();
             Node temp = head;
@@ -551,7 +575,32 @@ public class ListaDE {
             throw  new ListaDeException("NO es posible ejecutar el cambio de extremos");
         }
     }
-    public List<Boy> listBoysDegree(Integer degree) {
+
+    /**
+     * Metodo que recibe como parametro el genreo de un niño y lista los niños de ese genero
+     * @param gender
+     * @return
+     * @throws ListaDeException
+     */
+    public ListaDE getListTheBoysByGenderDe (Gender gender)throws ListaDeException{
+     validateListEmptyDe();
+     Node temp = this.head;
+     ListaDE listTemp = new ListaDE();
+     while (temp != null){
+         if (temp.getData().getGender().equals(gender)){
+             listTemp.addDe(temp.getData());
+         }
+         temp = temp.getNext();
+     }
+     return listTemp;
+}
+
+    /**
+     *
+     * @param grade
+     * @return
+     */
+    public List<Boy> listBoysGradeDe(byte grade) {
         /**
          * si la cabeza es diferente a vacio llamo al ayudante para empezar a recorrer la lista
          */
@@ -569,7 +618,7 @@ public class ListaDE {
                 /**
                  * le decimos al ayudante temporal que pregunte al niño en el que esta si el grado indicado es igual al garo al que pertenece.
                  */
-                if (temp.getData().getDegree().getDegree().equals(degree)) {
+                if (temp.getData().getGrade() == grade) {
                     /**
                      * Si el grado indicado es igual agregamos el niño a lista
                      */
@@ -592,17 +641,16 @@ public class ListaDE {
     }
     /**
      * Método que me retorne un listado con el conteo de niños por Genero
-     * @param code
+     * @param gender
      * @return
      */
-    public int getCountBoysByGender (String code)
+    public int getCountBoysByGenderDe (Gender gender)
     {
         /**
          * Cómo no me puedo mover de la cabeza porque se me vuelan todos los niños,
          * LLamo a un ayudante y lo ubico en la cabeza o inicio adicional llevo un contador
          */
-       Node temp = this.getHead();
-        temp.getNext().setPrevious(null);
+       Node temp = this.head;
         int count = 0;
         /**
          * Le indicamos al ayudante  que recorra la lista hasta que este vacia
@@ -613,7 +661,7 @@ public class ListaDE {
              * si en ayudante con el dato del genero es igual al genero solicitado
              * llevelo a contador y al contador se le suma 1
              */
-            if(temp.getData().getGender().getCode().equals(code));
+            if(temp.getData().getGender().equals(gender));
             {
                 count++;
             }
@@ -631,102 +679,133 @@ public class ListaDE {
      * Método que me permita eliminar los niños con una edad mayor a la suministrada
      */
 
-    public void deleteByAge (byte age)throws ListaDeException {
 
+    public void deleteByAgeOlderDe (byte age)throws ListaDeException {
+        validateListEmptyDe();
         /**
-         * si la cabeza es diferente a vacio llamo al ayudante para empezar a recorrer la lista
-         */
-        if (this.head != null) {
-            /**
              * paramos al ayudante en la cabeza
              */
-            Node temp = this.head;
-            temp.getNext().setPrevious(null);
-            /**
+        Node temp = this.head;
+        /**
              * Le indicamos al ayudante  que recorra la lista hasta que este vacia
              */
-            while (temp != null) {
-                /**
+        while (temp != null) {
+          /**
                  * validamos si el ayudante con el dato y la edad que trae es menor a la edad del niño
                  */
-                if (temp.getData().getAge() > age);
-                {
-                    /**
-                     * eliminamos el dato y la identificacion para eliminar el niño
-                     */
-                    temp= temp.getNext().getNext();
-                    temp.getNext().setPrevious(temp);
-                }
+          if (temp.getData().getAge() > age);
+             {
+               deleteDe(temp.getData().getIdentification());
+             }
                 /**
                  * ayudante pasa al siguiente
                  */
                 temp = temp.getNext();
             }
-            /**
-             * envio un mensaje al usuario informando que la lista esta vacia
-             */
-            throw new ListaDeException("la lista esta vacia");
         }
-    }
     /**
-     Método dado un género y edad, me entrega en una lista al inicio  los niños del género
-     con la edad menor o igual a la entregada
-     * @param age la edad que ingresan para el retorno
+     *
+     Método que, dado un género y una edad, me deje al inicio de la lista los niños del género dado y con la edad
+     menor o igual a la entregada
+     * @param age
      *
      */
-    public void listByGenderAge(byte age, String gender) throws ListaDeException{
-        if (this.head != null) {
-            Node temp = this.head;
-            ListaDE list = new ListaDE();
-            while (temp != null) {
-                if ((temp.getData().getGender().equals(gender))
-                        && (temp.getData().getAge() <= age)) {
-                    list.addToStart(temp.getData());
-                } else {
-                    list.add(temp.getData());
-                    temp.getNext().setPrevious(temp);
-                }
-                temp = temp.getNext();
+    public void listByGenderAgeDe(Gender gender, byte age) throws ListaDeException {
+        validateListEmptyDe();
+        /**
+         * Cómo no me puedo mover de la cabeza porque se me vuelan todos los niños,
+         * LLamo a un ayudante y lo ubico en la cabeza o inicio
+         */
+        Node temp = this.head;
+        /**
+         * Le indicamos al ayudante  que recorra la lista hasta que este vacia
+         */
+        while (temp != null) {
+            /**
+             * si el dato que tiene el ayudante de genero es igual al genero y el dato de la edad es menoro
+             * igual a la edad del niño
+             */
+            if (temp.getData().getGender().equals(gender) && temp.getData().getAge()
+                    <= age)
+            {
+                Boy boy = temp.getData();
+                deleteDe(temp.getData().getIdentification());
+                addToStartDe(boy);
             }
-            this.head = list.getHead();
+            temp = temp.getNext();
         }
-        throw new ListaDeException("No hay niños"+age + gender+"para listar");
     }
-    public List<Boy> listBoysByLocationByAge(byte age, String location) {
+
+    /**
+     * Método que dada una edad y un municipio me permita obtener el listado de los niños pertenecientes a ese municipio y de edad menor o igual a la dada
+     * @param age
+     * @param description
+     * @throws ListaDeException
+     */
+    public void listBoysByLocationByAge(byte age, String description) throws ListaDeException {
         /**
          * inicio una nueva lista para guardar los datos que necesito
          */
-        List<Boy> list = new ArrayList<>();
-        if (this.head != null) {
-            /**
-             * Cómo no me puedo mover de la cabeza porque se me vuelan todos los niños,
-             * LLamo a un ayudante y lo ubico en la cabeza o inicio
-             */
-            Node temp = this.getHead();
-            temp.getNext().setPrevious(null);
-            /**
-             * Le indicamos al ayudante  que recorra la lista hasta que este vacia
-             */
-            while (temp != null) {
-                /**
-                 * si el ayudante con el dato y la edad compara que la edad es menor o igual
-                 * a la edad del niño
-                 */
-                if (temp.getData().getAge() <= age && temp.getData().getLocation().getDescription().equals(location)) {
-                    /**
-                     * agrega el niño con los datos a la nueva lista
-                     */
-                    list.add(temp.getData());
-                }
-                /**
-                 * el ayudante pasara al siguiente
-                 */
-                temp = temp.getNext();
-            }
-        }
+        validateListEmptyDe();
         /**
-         * retorno la lista con los datos solicitados
+         * Cómo no me puedo mover de la cabeza porque se me vuelan todos los niños,
+         * LLamo a un ayudante y lo ubico en la cabeza o inicio
          */
-        return list;
+        Node temp = this.head;
+        /**
+         * Le indicamos al ayudante  que recorra la lista hasta que este vacia
+         */
+        while (temp != null) {
+            /**
+             * si el ayudante con el dato y la edad compara que la edad es menor o igual
+             * a la edad del niño
+             */
+            if (temp.getData().getAge() > age ||!temp.getData().getLocation().getDescription().equals(description)) {
+                deleteDe(temp.getData().getIdentification());
+            }
+            /**
+             * el ayudante pasara al siguiente
+             */
+            temp = temp.getNext();
+        }
+    }
+    public  void  deleteBypositionDe(int position)throws ListaDeException{
+        validateListEmptyDe();
+        //validacion de posicion
+        if (position > count){
+            throw new ListaDeException("No hay datos en la posicion ingresada");
+        }
+        if (position == 1){
+            deleteDe(head.getData().getIdentification());
+        }
+        else {
+            int cont = 1;
+            Node temp = this.head;
+            while (temp != null){
+                if (cont == position -1){
+                    break;
+                }
+                temp = temp.getNext();
+                cont++;
+            }
+            deleteDe(temp.getNext().getData().getIdentification());
+        }
+    }
+
+    public List<GenderByLocationDTO> getGendersByGradeByLocation(byte degree, Location location) throws ListaDeException
+    {
+        validateListEmptyDe();
+        int countTotal = 0;
+        int countM = 0;
+        int countF = 0;
+        Node temp = this.head;
+        while (temp != null) {
+            temp = temp.getNext();
+        }
+        List<CountByGenderDTO> countByGenderDTOS = new ArrayList<>();
+        countByGenderDTOS.add(new CountByGenderDTO(MASCULINO, countM));
+        countByGenderDTOS.add(new CountByGenderDTO(FEMENINO, countF));
+       // GendersByGradeDTO gendersByGradeDTO = new GendersByGradeDTO(degree, countByGenderDTOS, countTotal);
+        //return gendersByGradeDTO;
     }
 }

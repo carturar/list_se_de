@@ -15,7 +15,6 @@ import java.util.List;
 public class ListSeService {
     private ListSE listBoys;
     private List<Location> locations;
-    private List<Gender1> gender;
 
     public ListSeService(){
         listBoys = new ListSE();
@@ -31,9 +30,9 @@ public class ListSeService {
 
     public void initializationGender()
     {
-        gender=new ArrayList<>();
-        gender.add(new Gender1("1","Masculino"));
-        gender.add(new Gender1("2","Femenino"));
+        //gender = new ArrayList<Gender>();
+     //   boolean add = gender.add (new Gender.MASCULINO);
+      //  gender.add (Gender.FEMENINO);
     }
 
     public boolean validateLocation(Location location)
@@ -106,10 +105,10 @@ public class ListSeService {
         listBoys.delete(identification);
         return new ResponseEntity<>(new ResponseDTO("niño eliminado", identification, null), HttpStatus.OK);
     }
-    public ResponseEntity<ResponseDTO> Sex(String sex) throws ListaSeException
+   // public ResponseEntity<ResponseDTO> Sex(String sex) throws ListaSeException
     {
-        return new ResponseEntity<>(new ResponseDTO("Lista Genero", listBoys.list().stream().filter
-                (boy -> boy.getGender().equals(sex)),null),HttpStatus.OK);
+      //  return new ResponseEntity<>(new ResponseDTO("Lista Genero", listBoys.list().stream().filter
+            //    (boy -> boy.getGender().equals(sex)),null),HttpStatus.OK);
     }
     public ResponseEntity<ResponseDTO> variantList() throws ListaSeException
     {
@@ -131,42 +130,45 @@ public class ListSeService {
                 ,HttpStatus.OK);
     }
 
-    public ResponseEntity<ResponseDTO> boysByLocationByAge(byte age, String location) {
-        listBoys.listBoysByLocationByAge(age, location);
+    public ResponseEntity<ResponseDTO> boysByLocationByAge(byte age, String description) throws ListaSeException{
+        listBoys.listBoysByLocationByAge(age, description);
         return new ResponseEntity<>(
-                new ResponseDTO("Satisfactorio", listBoys.listBoysByLocationByAge(age, location),null)
+                new ResponseDTO("Satisfactorio", boysByLocationByAge(age, description),null)
                 ,HttpStatus.OK);
     }
-    public  ResponseEntity<ResponseDTO> byGenderAge(byte age, String gender)throws ListaSeException{
-        listBoys.listByGenderAge(age, gender);
+    public  ResponseEntity<ResponseDTO> byGenderAge(Gender gender, byte age)throws ListaSeException{
+        listBoys.listByGenderAge(gender, age);
         return new ResponseEntity<>(
                 new ResponseDTO("satisfactorio",true, null), HttpStatus.OK);
     }
-    public  ResponseEntity<ResponseDTO>deleteByAge(byte age)throws ListaSeException{
-        listBoys.deleteByAge(age);
-        return  new ResponseEntity<>(new ResponseDTO("Niño eliminado", true, null), HttpStatus.OK);
+    public  ResponseEntity<ResponseDTO>deleteByAgeOlder(byte age)throws ListaSeException{
+        listBoys.deleteByAgeOlder(age);
+        return  new ResponseEntity<>(new ResponseDTO("Niño eliminado", deleteByAgeOlder(age), null), HttpStatus.OK);
     }
-    public ResponseEntity<ResponseDTO>getCountBoysByGender(){
+    public ResponseEntity<ResponseDTO>getBoysByGender(){
         List<BoysByGender> boysByGenders = new ArrayList<>();
-        for (Gender1 gend: gender)
-        {
-            int count = listBoys.getCountBoysByGender(gend.getCode());
-            boysByGenders.add(new BoysByGender(gend,count));
-        }
+
+
+        int count = listBoys.getCountBoysByGender(Gender.FEMENINO);
+        boysByGenders.add(new BoysByGender(Gender.FEMENINO, count));
+
+        int count2 = listBoys.getCountBoysByGender(Gender.MASCULINO);
+        boysByGenders.add(new BoysByGender(Gender.MASCULINO, count2));
+
         return new ResponseEntity<>(
                 new ResponseDTO("Satisfactorio", boysByGenders,null)
                 ,HttpStatus.OK);
     }
-    public ResponseEntity<ResponseDTO>deleteByGender(String code) throws ListaSeException {
-        listBoys.deleteByGender(code);
+    public ResponseEntity<ResponseDTO>deleteByGender(Gender gender) throws ListaSeException  {
+        listBoys.deleteByGender(gender);
         return new ResponseEntity<>(new ResponseDTO("niño eliminado", true,null), HttpStatus.OK);
     }
-    public ResponseEntity<ResponseDTO>listBoysDegree (Integer degree){
-       listBoys.listBoysDegree(degree);
+    public ResponseEntity<ResponseDTO> listBoysGrade (byte grade)throws ListaSeException{
+       listBoys.listBoysByGrade(grade);
        return new ResponseEntity<>(new ResponseDTO("satisfactorio", true, null), HttpStatus.OK);
     }
-    public ResponseEntity<ResponseDTO>deleteByPosition(Boy boy,int position)throws ListaSeException {
-       listBoys.deleteByPosition(boy,position);
+    public ResponseEntity<ResponseDTO>deleteByPosition(int position)throws ListaSeException {
+       listBoys.deleteByPosition(position);
        return new ResponseEntity<>(new ResponseDTO("niño eliminado",true,null), HttpStatus.OK);
     }
 }

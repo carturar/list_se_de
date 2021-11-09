@@ -4,6 +4,7 @@ import com.umanizales.lists_prog2.controller.dto.ResponseDTO;
 import com.umanizales.lists_prog2.exception.ListaDeException;
 import com.umanizales.lists_prog2.exception.ListaSeException;
 import com.umanizales.lists_prog2.model.Boy;
+import com.umanizales.lists_prog2.model.Gender;
 import com.umanizales.lists_prog2.service.ListaDeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -71,29 +72,29 @@ public class BoysControllerDe {
     public ResponseEntity<ResponseDTO> boysByLocation()
     {return listsDeService.getBoysByLocation();}
 
-    @GetMapping(path = "boysbylocationbyage/{age}/{location}")
-    public  ResponseEntity<ResponseDTO> boysByLocationByAge(@PathVariable byte age,@PathVariable String location)
-    {return listsDeService.boysByLocationByAge(age,location);}
+    @GetMapping(path = "boysbylocationbyage/{age}/{description}")
+    public  ResponseEntity<ResponseDTO> boysByLocationByAge(@PathVariable byte age,@PathVariable String description)throws ListaDeException
+    {return listsDeService.boysByLocationByAgeDe(age,description);}
 
-    @GetMapping(path = "bygenderage/{age}/{gender}")
-    public ResponseEntity<ResponseDTO>byGenderAge(@PathVariable byte age, @PathVariable String gender)throws ListaDeException
-    {return listsDeService.byGenderAge(age, gender);}
+    @GetMapping(path = "bygenderage/{Gender}/{age}")
+    public ResponseEntity<ResponseDTO>byGenderAge(@PathVariable Gender gender, @PathVariable byte age)throws ListaDeException
+    {return listsDeService.byGenderAgeDe(gender, age);}
 
-    @GetMapping(path = "countboysbygender")
-    public ResponseEntity<ResponseDTO>countBoysByGender()
-    {return listsDeService.getCountBoysByGender();}
+    @GetMapping(path = "boysbygender")
+    public ResponseEntity<ResponseDTO>BoysByGender(Gender gender)
+    {return listsDeService.getCountBoysByGender(gender);}
 
-    @GetMapping(path = "deletebyage/{age}")
+    @GetMapping(path = "deletebyageolder/{age}")
     public ResponseEntity<ResponseDTO>deleteByAge(@PathVariable byte age)throws ListaDeException
-    {return listsDeService.deleteByAge(age);}
+    {return listsDeService.deleteByAgeOlder(age);}
 
-    @GetMapping(path = "deletebygender/{code}")
-    public ResponseEntity<ResponseDTO>deleteByGender(@PathVariable String code)throws ListaDeException
-    {return listsDeService.deleteByGender(code);}
+    @GetMapping(path = "deletebygender/{gender}")
+    public ResponseEntity<ResponseDTO>deleteByGender(@PathVariable Gender gender)throws ListaDeException
+    {return listsDeService.deleteByGender(gender);}
 
-    @GetMapping(path = "listboysdegree/{degree}")
-    public ResponseEntity<ResponseDTO>listBoyDegree(@PathVariable Integer degree)
-    {return  listsDeService.listBoysDegree(degree);}
+    @GetMapping(path = "listboysdegree/{grade}")
+    public ResponseEntity<ResponseDTO>listBoyGrade(@PathVariable byte grade)
+    {return  listsDeService.listBoysGrade(grade);}
 
     @GetMapping("deletebyposition/{boy}/{position}")
     public ResponseEntity<ResponseDTO>deleteByPosition(@PathVariable Boy boy, @PathVariable int position)throws ListaDeException

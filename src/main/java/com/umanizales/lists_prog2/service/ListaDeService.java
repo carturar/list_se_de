@@ -17,7 +17,6 @@ import java.util.List;
 public class ListaDeService {
     private ListaDE listBoys;
     private List<Location> locations;
-    private List<Gender1> gender;
 
     public ListaDeService(){
         listBoys = new ListaDE();
@@ -33,9 +32,9 @@ public class ListaDeService {
 
     public void initializationGender()
     {
-        gender=new ArrayList<>();
-        gender.add(new Gender1("1","Masculino"));
-        gender.add(new Gender1("2","Femenino"));
+       // gender=new ArrayList<>();
+      //  gender.add(new Gender.MASCULINO);
+       // gender.add(new Gender.MASCULINO);
     }
 
     public boolean validateLocation(Location location)
@@ -55,12 +54,12 @@ public class ListaDeService {
         {
             throw new ListaDeException("La ubicacion ingresada no es valida");
         }
-        listBoys.add(boy);
+        listBoys.addDe(boy);
         return new ResponseEntity<>(new ResponseDTO("Niño adicionado", true, null), HttpStatus.OK);
     }
     public ResponseEntity<ResponseDTO> addBoyByPosition(Boy boy, int position) throws ListaDeException
     {
-        listBoys.addByPosition(boy, position);
+        listBoys.addByPositionDe(boy, position);
         return new ResponseEntity<>(
                 new ResponseDTO("Niño adicionado", true, null),
                 HttpStatus.OK);
@@ -68,7 +67,7 @@ public class ListaDeService {
 
     public ResponseEntity<ResponseDTO> addBoyToStart(Boy boy)throws ListaDeException
     {
-        listBoys.addToStart(boy);
+        listBoys.addToStartDe(boy);
         return new ResponseEntity<>(new ResponseDTO("Niño adicionado", true, null), HttpStatus.OK);
     }
 
@@ -82,7 +81,7 @@ public class ListaDeService {
     }
     public ResponseEntity<ResponseDTO> invertList()throws ListaDeException
     {
-        listBoys.invert();
+        listBoys.invertDe();
         return new ResponseEntity<>(new ResponseDTO("Satisfactorio", listBoys.getHead(), null), HttpStatus.OK);
     }
     public ResponseEntity<ResponseDTO> getCount()
@@ -91,18 +90,18 @@ public class ListaDeService {
     }
     public ResponseEntity<ResponseDTO> count()
     {
-        return new ResponseEntity<>(new ResponseDTO("Satisfactorio", listBoys.count(), null), HttpStatus.OK);
+        return new ResponseEntity<>(new ResponseDTO("Satisfactorio", listBoys.countDe(), null), HttpStatus.OK);
     }
 
     public ResponseEntity<ResponseDTO> changeXtremes()throws ListaDeException
     {
-        listBoys.changeXtremes();
+        listBoys.changeXtremesDe();
         return new ResponseEntity<>(new ResponseDTO("Satisfactorio", true, null), HttpStatus.OK);
     }
 
     public ResponseEntity<ResponseDTO> delete(String identification)throws ListaDeException
     {
-        listBoys.delete(identification);
+        listBoys.deleteDe(identification);
         return new ResponseEntity<>(new ResponseDTO("niño eliminado", identification, null), HttpStatus.OK);
     }
 
@@ -118,7 +117,7 @@ public class ListaDeService {
         List<BoysByLocation> boysByLocations = new ArrayList<>();
         for (Location loc: locations)
         {
-            int count = listBoys.getCountBoysByLocation(loc.getCode());
+            int count = listBoys.getCountBoysByLocationDe(loc.getCode());
             boysByLocations.add(new BoysByLocation(loc,count));
         }
         return new ResponseEntity<>(
@@ -126,42 +125,45 @@ public class ListaDeService {
                 ,HttpStatus.OK);
     }
 
-    public ResponseEntity<ResponseDTO> boysByLocationByAge(byte age, String location) {
-        listBoys.listBoysByLocationByAge(age, location);
+    public ResponseEntity<ResponseDTO> boysByLocationByAgeDe(byte age, String descriptiom) throws ListaDeException{
+        listBoys.listBoysByLocationByAge(age, descriptiom);
         return new ResponseEntity<>(
-                new ResponseDTO("Satisfactorio", listBoys.listBoysByLocationByAge(age, location),null)
+                new ResponseDTO("Satisfactorio", true,null)
                 ,HttpStatus.OK);
     }
-    public  ResponseEntity<ResponseDTO> byGenderAge(byte age, String gender)throws ListaDeException{
-        listBoys.listByGenderAge(age, gender);
+    public  ResponseEntity<ResponseDTO> byGenderAgeDe(Gender gender, byte age)throws ListaDeException{
+        listBoys.listByGenderAgeDe(gender, age);
         return new ResponseEntity<>(
                 new ResponseDTO("satisfactorio",true, null), HttpStatus.OK);
     }
-    public  ResponseEntity<ResponseDTO>deleteByAge(byte age)throws ListaDeException{
-        listBoys.deleteByAge(age);
-        return  new ResponseEntity<>(new ResponseDTO("Niño eliminado", true, null), HttpStatus.OK);
+    public  ResponseEntity<ResponseDTO>deleteByAgeOlder(byte age)throws ListaDeException{
+        listBoys.deleteByAgeOlderDe(age);
+        return  new ResponseEntity<>(new ResponseDTO("Niño eliminado", deleteByAgeOlder(age), null), HttpStatus.OK);
     }
-    public ResponseEntity<ResponseDTO>getCountBoysByGender(){
+    public ResponseEntity<ResponseDTO>getCountBoysByGender(Gender gender){
         List<BoysByGender> boysByGenders = new ArrayList<>();
-        for (Gender1 gend: gender)
-        {
-            int count = listBoys.getCountBoysByGender(gend.getCode());
-            boysByGenders.add(new BoysByGender(gend,count));
-        }
+
+        int count = listBoys.getCountBoysByGenderDe(Gender.FEMENINO);
+        boysByGenders.add(new BoysByGender(Gender.FEMENINO, count));
+
+        int count2 = listBoys.getCountBoysByGenderDe(Gender.MASCULINO);
+        boysByGenders.add(new BoysByGender(Gender.MASCULINO, count2));
+
         return new ResponseEntity<>(
                 new ResponseDTO("Satisfactorio", boysByGenders,null)
                 ,HttpStatus.OK);
     }
-    public ResponseEntity<ResponseDTO>deleteByGender(String code) throws ListaDeException {
-        listBoys.deleteByGender(code);
+    public ResponseEntity<ResponseDTO>deleteByGender(Gender gender) throws ListaDeException {
+        listBoys.deleteByGenderDe(gender);
         return new ResponseEntity<>(new ResponseDTO("niño eliminado", true,null), HttpStatus.OK);
     }
-    public ResponseEntity<ResponseDTO>listBoysDegree (Integer degree){
-        listBoys.listBoysDegree(degree);
+    public ResponseEntity<ResponseDTO>listBoysGrade (byte grade){
+        listBoys.listBoysGradeDe(grade);
         return new ResponseEntity<>(new ResponseDTO("satisfactorio", true, null), HttpStatus.OK);
     }
     public ResponseEntity<ResponseDTO>deleteByPosition(Boy boy,int position)throws ListaDeException {
-        listBoys.deleteByPosition(boy,position);
+        listBoys.deleteByPositionDe(boy,position);
         return new ResponseEntity<>(new ResponseDTO("niño eliminado",true,null), HttpStatus.OK);
     }
+
 }

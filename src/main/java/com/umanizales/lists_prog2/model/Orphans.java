@@ -5,7 +5,6 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class Gender1 {
-    private String code;
-    private String description;
+public class Orphans {
+    private boolean orphans;
 }

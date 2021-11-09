@@ -4,10 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 /**
  * Clase para almacenar la información referente a un niño
@@ -35,11 +32,14 @@ public class Boy {
     @Positive
     private byte age;
     @NotNull
-    public Gender1 gender;
+    public Gender gender;
     @Valid
     @NotNull
     private Location location;
     @NotNull
-    private Degree degree;
-
+    @Positive
+    @Max(value = 5, message = "Debe ingresar un grado valido")
+    private byte grade;
+    @NotNull
+    private boolean orphans;
 }
