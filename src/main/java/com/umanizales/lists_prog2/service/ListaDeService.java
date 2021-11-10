@@ -165,5 +165,10 @@ public class ListaDeService {
         listBoys.deleteByPositionDe(boy,position);
         return new ResponseEntity<>(new ResponseDTO("niño eliminado",true,null), HttpStatus.OK);
     }
+    public ResponseEntity<ResponseDTO> getOrphanByGradesByLocation(){
+        List<GradesByLocationDTO> gradesByLocationDTOS = new ArrayList<>();
+        //Recorrer todas las location parado parado en una location el metodo de la lista
+        return new ResponseEntity<>(new ResponseDTO("Satisfactorio", gradesByLocationDTOS, null),HttpStatus.OK);
+    }
 
 }

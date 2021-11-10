@@ -7,7 +7,7 @@ import java.util.List;
 
 @Data
 @AllArgsConstructor
-public class GenderByLocationDTO {
-    private List<GendersByGradeDTO> gendersByGradeDTOS;
+public class GradesByLocationDTO {
     private Location location;
+    private List<GendersByGradeDTO> gradesByGradeDTOS;
 }

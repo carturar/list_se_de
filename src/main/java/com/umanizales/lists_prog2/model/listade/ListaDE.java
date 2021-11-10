@@ -9,7 +9,6 @@ package com.umanizales.lists_prog2.model.listade;
 import com.umanizales.lists_prog2.exception.ListaDeException;
 
 
-import com.umanizales.lists_prog2.exception.ListaSeException;
 import com.umanizales.lists_prog2.model.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -792,20 +791,40 @@ public class ListaDE {
         }
     }
 
-    public List<GenderByLocationDTO> getGendersByGradeByLocation(byte degree, Location location) throws ListaDeException
+    public GendersByGradeDTO getGendersByGradeByLocation(byte grade, Location location) throws ListaDeException
     {
         validateListEmptyDe();
+        Node temp = this.head;
         int countTotal = 0;
         int countM = 0;
         int countF = 0;
-        Node temp = this.head;
         while (temp != null) {
+            if (temp.getData().getLocation().getCode().equals(location.getCode())
+                    && temp.getData().getGrade() == grade){
+                countTotal++;
+                if (temp.getData().isOrphans()){
+                    if (temp.getData().getGender().equals(MASCULINO)){
+                        countM++;
+                    }
+                    else {
+                        countF++;
+                    }
+                }
+            }
             temp = temp.getNext();
         }
-        List<CountByGenderDTO> countByGenderDTOS = new ArrayList<>();
-        countByGenderDTOS.add(new CountByGenderDTO(MASCULINO, countM));
-        countByGenderDTOS.add(new CountByGenderDTO(FEMENINO, countF));
-       // GendersByGradeDTO gendersByGradeDTO = new GendersByGradeDTO(degree, countByGenderDTOS, countTotal);
-        //return gendersByGradeDTO;
+      List<CountByGenderDTO> countByGenderDTOS = new ArrayList<>();
+        countByGenderDTOS.add(new CountByGenderDTO(Gender.MASCULINO, countM));
+        countByGenderDTOS.add(new CountByGenderDTO(Gender.FEMENINO, countF));
+        GendersByGradeDTO gendersByGradeDTO = new GendersByGradeDTO(grade,countByGenderDTOS, countTotal);
+        return gendersByGradeDTO;
+    }
+    public GradesByLocationDTO gradesByLocationDTO(Location location)throws ListaDeException{
+        List<GendersByGradeDTO>gendersByGradeDTOS = new ArrayList<>();
+        for (byte i=1; 1<5; i++){
+            gendersByGradeDTOS.add(getGendersByGradeByLocation(i,location));
+        }
+        GradesByLocationDTO gradesByLocationDTO = new GradesByLocationDTO(location, gendersByGradeDTOS);
+        return gradesByLocationDTO;
     }
 }
