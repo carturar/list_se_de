@@ -510,8 +510,7 @@ public class ListaDE {
             throw  new ListaDeException("No hay datos en la lista");
         }
     }
-  public void deleteSuicide (String identification) throws ListaDeException
-  {
+  public void deleteSuicide (String identification) throws ListaDeException {
       if (this.head != null){
           if (this.head.getData().getIdentification().equals(identification)){
               this.head = this.head.getNext();
@@ -545,8 +544,7 @@ public class ListaDE {
      * @param code entra como parámetro con el código que identifica la ciudad
      * @return me retorna el contador con la cantidad de datos obtenidos en el método
      **/
-    public int getCountBoysByLocationDe(String code)
-    {
+    public int getCountBoysByLocationDe(String code) {
         Node temp= this.head;
         int count=0;
         while(temp != null)
@@ -643,8 +641,7 @@ public class ListaDE {
      * @param gender
      * @return
      */
-    public int getCountBoysByGenderDe (Gender gender)
-    {
+    public int getCountBoysByGenderDe (Gender gender) {
         /**
          * Cómo no me puedo mover de la cabeza porque se me vuelan todos los niños,
          * LLamo a un ayudante y lo ubico en la cabeza o inicio adicional llevo un contador
@@ -791,8 +788,7 @@ public class ListaDE {
         }
     }
 
-    public GendersByGradeDTO getGendersByGradeByLocation(byte grade, Location location) throws ListaDeException
-    {
+    public GendersByGradeDTO getGendersByGradeByLocation(byte grade, Location location) throws ListaDeException {
         validateListEmptyDe();
         Node temp = this.head;
         int countTotal = 0;
@@ -819,12 +815,14 @@ public class ListaDE {
         GendersByGradeDTO gendersByGradeDTO = new GendersByGradeDTO(grade,countByGenderDTOS, countTotal);
         return gendersByGradeDTO;
     }
-    public GradesByLocationDTO gradesByLocationDTO(Location location)throws ListaDeException{
-        List<GendersByGradeDTO>gendersByGradeDTOS = new ArrayList<>();
-        for (byte i=1; 1<5; i++){
-            gendersByGradeDTOS.add(getGendersByGradeByLocation(i,location));
+    public GradesByLocationDTO gradesByLocationDTO(Location location)throws ListaDeException {
+        List<GendersByGradeDTO> gendersByGradeDTOS = new ArrayList<>();
+        for (byte i = 1; 1 < 5; i++) {
+            gendersByGradeDTOS.add(getGendersByGradeByLocation(i, location));
+            {
+                GradesByLocationDTO gradesByLocationDTO = new GradesByLocationDTO(location, gendersByGradeDTOS);
+                return gradesByLocationDTO;
+            }
         }
-        GradesByLocationDTO gradesByLocationDTO = new GradesByLocationDTO(location, gendersByGradeDTOS);
-        return gradesByLocationDTO;
     }
 }
