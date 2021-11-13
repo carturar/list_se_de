@@ -168,8 +168,8 @@ public class ListaDeService {
         //Recorrer todas las location parado en una location el metodo de la lista
         return new ResponseEntity<>(new ResponseDTO("Satisfactorio", gradesByLocationDTOS, null),HttpStatus.OK);
     }
-    public ResponseEntity<ResponseDTO> orderListChange() throws ListaDeException{
-        listBoys.orderListChange();
+    public ResponseEntity<ResponseDTO> orderListInvertBoys() throws ListaDeException{
+        listBoys.orderListInvertBoys();
         return new ResponseEntity<>(new ResponseDTO("Satisfactorio",listBoys.getHead(), null), HttpStatus.OK);
     }
 

@@ -828,7 +828,7 @@ public class ListaDE {
      * Metodo por el cual retornara una lista con los niños de primero y las niñas de segundo invirtiendo la lista de los niños
      * @throws ListaDeException
      */
-    public void orderListChange() throws ListaDeException {
+    public void orderListInvertBoys() throws ListaDeException {
         /**
          * valido si la lista esta vacia
          */
