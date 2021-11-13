@@ -674,8 +674,6 @@ public class ListaDE {
     /**
      * Método que me permita eliminar los niños con una edad mayor a la suministrada
      */
-
-
     public void deleteByAgeOlderDe (byte age)throws ListaDeException {
         validateListEmptyDe();
         /**
@@ -825,4 +823,52 @@ public class ListaDE {
             }
         }
     }
+
+    /**
+     * Metodo por el cual retornara una lista con los niños de primero y las niñas de segundo invirtiendo la lista de los niños
+     * @throws ListaDeException
+     */
+    public void orderListChange() throws ListaDeException {
+        /**
+         * valido si la lista esta vacia
+         */
+        validateListEmptyDe();
+        /**
+         * creo una nuneva lista temporal
+         */
+        ListaDE listTemp = new ListaDE();
+        /**
+         * creo el ayudante y lo coloco en la cabeza
+         */
+        Node temp = this.head;
+        /**
+         * Le indicamos al ayudante  que recorra la lista hasta que este vacia
+         */
+        while (temp != null) {
+            /**
+             * el ayudante con el dato que tiene valida el genero si es igual a masculino
+             * lo lleva a la nueva lista y lo adiciona a la cabeza
+             */
+            if (temp.getData().getGender().equals(MASCULINO)) {
+                listTemp.addToStartDe(temp.getData());
+                /**
+                 * si no
+                 */
+            } else {
+                /**
+                 * en la lista temporal envie el dato del otro niño que no sea masculino
+                 */
+                listTemp.addDe(temp.getData());
+            }
+            /**
+             * el ayudante pasara al siguiente
+             */
+            temp = temp.getNext();
+        }
+        /**
+         * en la cabeza coloque la lista temporal que se creo
+         */
+        this.head = listTemp.head;
+    }
+
 }

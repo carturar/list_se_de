@@ -2,10 +2,8 @@ package com.umanizales.lists_prog2.service;
 
 import com.umanizales.lists_prog2.controller.dto.ResponseDTO;
 import com.umanizales.lists_prog2.exception.ListaDeException;
-import com.umanizales.lists_prog2.exception.ListaSeException;
 import com.umanizales.lists_prog2.model.*;
 import com.umanizales.lists_prog2.model.listade.ListaDE;
-import lombok.SneakyThrows;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -169,6 +167,10 @@ public class ListaDeService {
         List<GradesByLocationDTO> gradesByLocationDTOS = new ArrayList<>();
         //Recorrer todas las location parado en una location el metodo de la lista
         return new ResponseEntity<>(new ResponseDTO("Satisfactorio", gradesByLocationDTOS, null),HttpStatus.OK);
+    }
+    public ResponseEntity<ResponseDTO> orderListChange() throws ListaDeException{
+        listBoys.orderListChange();
+        return new ResponseEntity<>(new ResponseDTO("Satisfactorio",listBoys.getHead(), null), HttpStatus.OK);
     }
 
 }

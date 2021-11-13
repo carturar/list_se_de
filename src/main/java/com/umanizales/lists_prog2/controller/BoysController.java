@@ -98,10 +98,10 @@ public class BoysController {
     {return listSeService.deleteByGender(gender);}
 
     @GetMapping(path = "listboysgrade/{grade}")
-    public ResponseEntity<ResponseDTO>listBoyGrade(@PathVariable byte grade)
-    {return  listSeService.listBoysGrade(byte);}
+    public ResponseEntity<ResponseDTO>listBoyGrade(@PathVariable byte grade)throws ListaSeException
+    {return  listSeService.listBoysGrade(grade);}
 
-    @GetMapping("deletebyposition/{position}")
+    @GetMapping(path = "deletebyposition/{position}")
     public ResponseEntity<ResponseDTO>deleteByPosition(@PathVariable int position)throws ListaSeException
     {return listSeService.deleteByPosition(position);}
 

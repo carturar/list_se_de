@@ -100,5 +100,8 @@ public class BoysControllerDe {
     public ResponseEntity<ResponseDTO>deleteByPosition(@PathVariable Boy boy, @PathVariable int position)throws ListaDeException
     {return listsDeService.deleteByPosition(boy,position);}
 
+    @GetMapping(path = "orderlistchange")
+    public ResponseEntity<ResponseDTO>orderListChange() throws ListaDeException
+    {return listsDeService.orderListChange();}
 
 }
