@@ -12,6 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+/**
+ * clase donde obtendremos una respuesta para cada tipo de metodo realizado de una forma organizada donde el usuario
+ * pueda entender que tipo de dato falta ingresar o que dato es erroneo en la lisda doblemente enlazada
+ */
 public class ListaDeService {
     private ListaDE listBoys;
     private List<Location> locations;

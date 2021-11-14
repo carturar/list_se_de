@@ -5,6 +5,9 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
+/**
+ * clase para saber si el niño es huerfano se maneja con falso o verdadero
+ */
 public class Orphans {
     private boolean orphans;
 }

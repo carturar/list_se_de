@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 /**
- * metodo por el cual tenemomos a los niños por locacion donde tenemos la locacion
+ * clase por el cual tenemos a los niños por locacion donde tenemos la locacion
  */
 public class BoysByLocation {
     private Location location;

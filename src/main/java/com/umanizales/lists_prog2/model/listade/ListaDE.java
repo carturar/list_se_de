@@ -764,58 +764,145 @@ public class ListaDE {
             temp = temp.getNext();
         }
     }
+
+    /**
+     * metodo el cual eliminara un niño en una posicion dada
+     * @param position
+     * @throws ListaDeException
+     */
     public  void  deleteBypositionDe(int position)throws ListaDeException{
+        /**
+         * validamos si la lista esta vacia
+         */
         validateListEmptyDe();
-        //validacion de posicion
+        /**
+         * validacion de posicion
+         */
         if (position > count){
+            /**
+             * lanzamos un mensaje al usuario informando que no hay datos
+             */
             throw new ListaDeException("No hay datos en la posicion ingresada");
         }
+        /**
+         * si es la posicion 1 eliminamos la cabeza
+         */
         if (position == 1){
             deleteDe(head.getData().getIdentification());
         }
+        /**
+         * si no
+         */
         else {
+            /**
+             * empeazamos con el contador y colocamos al ayudante a recorrer la lista
+             */
             int cont = 1;
             Node temp = this.head;
             while (temp != null){
+                /**
+                 * si la posicion da negativo rompemos el ciclo
+                 */
                 if (cont == position -1){
                     break;
                 }
+                /**
+                 * el yudante sigue recorriendo la lista
+                 */
                 temp = temp.getNext();
                 cont++;
             }
+            /**
+             * eliminamos el siguiente en el que estamos parados con la identificacion que corresponda
+             */
             deleteDe(temp.getNext().getData().getIdentification());
         }
     }
 
+    /**
+     * metodo para enconrar de una locacion un niño y su grado
+     * @param grade
+     * @param location
+     * @return
+     * @throws ListaDeException
+     */
     public GendersByGradeDTO getGendersByGradeByLocation(byte grade, Location location) throws ListaDeException {
+        /**
+         * validamos que la lista no este vacia llamamos al ayudante lo paramos en la cabeza
+         * iniciamos 3 contadores uno total uno para genero f y otro para genero m y se inician en 0 para llevar los datos
+         */
         validateListEmptyDe();
         Node temp = this.head;
         int countTotal = 0;
         int countM = 0;
         int countF = 0;
+        /**
+         * mientras el ayudante no este vacio
+         */
         while (temp != null) {
+            /**
+             * si el ayudante con el dato del niño, la locacion, el codigo de la locacion, es igual a la locacion
+             * que se necesita y el codigo correcto y adicional el dato del ayudante del grado es igual al grado solicitado
+             */
             if (temp.getData().getLocation().getCode().equals(location.getCode())
                     && temp.getData().getGrade() == grade){
+                /**
+                 * lleve los datos al contador total
+                 */
                 countTotal++;
+                /**
+                 * si el dato del ayudante sobre que sea huerfano
+                 */
                 if (temp.getData().isOrphans()){
+                    /**
+                     * si el dato en el ayudante sobre el genero es masculino
+                     */
                     if (temp.getData().getGender().equals(MASCULINO)){
+                        /**
+                         * llevamos el dato al contador de genero m
+                         */
                         countM++;
                     }
+                    /**
+                     * si no
+                     */
                     else {
+                        /**
+                         * el dato lo llevamos al contador del genero f
+                         */
                         countF++;
                     }
                 }
             }
+            /**
+             * ayudante sigue recorriendo la lista
+             */
             temp = temp.getNext();
         }
+        /**
+         * en un arraylist ingresamos los datos del contador de generos para saber cuantos niños en todal tenemos
+         */
       List<CountByGenderDTO> countByGenderDTOS = new ArrayList<>();
         countByGenderDTOS.add(new CountByGenderDTO(Gender.MASCULINO, countM));
         countByGenderDTOS.add(new CountByGenderDTO(Gender.FEMENINO, countF));
         GendersByGradeDTO gendersByGradeDTO = new GendersByGradeDTO(grade,countByGenderDTOS, countTotal);
         return gendersByGradeDTO;
     }
+
+    /**
+     * metodo por el cual encontraremos los niños por locacion y grado
+     * @param location
+     * @return
+     * @throws ListaDeException
+     */
     public GradesByLocationDTO gradesByLocationDTO(Location location)throws ListaDeException {
+        /**
+         * creamos un arraylist para guardar los datos de los niños por grado y por genero
+         */
         List<GendersByGradeDTO> gendersByGradeDTOS = new ArrayList<>();
+        /**
+         * creamos un metodo para recorrer 5 veces la lista
+         */
         for (byte i = 1; 1 < 5; i++) {
             gendersByGradeDTOS.add(getGendersByGradeByLocation(i, location));
             {
@@ -874,39 +961,120 @@ public class ListaDE {
         throw new ListaDeException("No hay datos en la lista");
     }
 
+    /**
+     * metodo para encontrar niños de un grado y saber el rh
+     * @param grade
+     * @return
+     */
     public BoysByGradeRhDTO getBoysByGenderRh(byte grade) {
+        /**
+         * creamos una ayudante y lo paramos en la cabeza
+         */
          Node temp = this.head;
+        /**
+         * creamos una variable que cuente y guarde los niños con el rh
+         */
         String rh = ""; int count = 0;
+        /**
+         * mientras el ayudante no este vacio siga preguntando
+         */
         while (temp != null){
+            /**
+             * si el adto que tiene el ayudante del grado es igual al grado solicitado
+             */
             if (temp.getData().getGrade() == grade){
+                /***
+                 * y si el rh es diferente a lo que tiene el ayudante guardado en el dato
+                 */
                 if (!rh.contains(temp.getData().getRh())){
                     rh = rh+ "," + temp.getData().getRh();
                 }
+                /**
+                 * incrementamos la variable contador en 1
+                 */
                 count++;
             }
+            /**
+             * el ayudante sigue preguntando
+             */
             temp = temp.getNext();
         }
+        /**
+         * retorno lo que tenga guardado en el motedo de niños por grado y rh con los datos solicitado del grado, el rh
+         * y el contador que estabamos llevando para la cantidad
+         */
         return  new BoysByGradeRhDTO(grade, rh, count);
     }
+
+    /**
+     * metodo por el cual encontraremos los niños de un grado y de una genero
+     * @param gender
+     * @return
+     */
     public  BoysByGradeByaGenderDTO getboysByGradeByaGenderDTO(Gender gender){
+        /**
+         * creamos una arreglo para economizar memoria ya que sabemos cuantas veces se necesita
+         */
         BoysByGradeRhDTO[] boysByGradeRhDTO = new BoysByGradeRhDTO[5];
+        /**
+         * creamos un metodo apra fecorrer 5 veces la lista
+         */
         for (byte i = 0; i < 5; i++) {
+            /**
+             * recorremos la lista de niños por grado y rh y empezamos a contar las posiciones
+             */
             boysByGradeRhDTO[i] = getBoysByGenderRh((byte) (i + 1));
         }
+        /**
+         * retornamos los niños por grados y por genero con los datos de genero y le adicionamos los niños por grado y rh
+         */
         return new BoysByGradeByaGenderDTO(gender, boysByGradeRhDTO);
     }
+
+    /**
+     * metodo por el cual encontraremos los niños por locacion y por genero
+     * @param location
+     * @return
+     */
     public BoysByLocationByGenderDTO boysByLocationByGenderDTO(Location location) {
+        /**
+         * creamos un arraylist donde guardaremos los datos de los niños por grado y por genero
+         */
         List<BoysByGradeByaGenderDTO> boysByGradeByaGenderDTOS = new ArrayList<>();
+        /**
+         * creamos un contador para llevar el dato
+         */
         int count =0;
+        /**
+         * llamamos al ayudante y lo paramos en la cabeza
+         */
         Node temp = head;
+        /**
+         * mientras el ayudante no este vacio
+         */
         while (temp != null){
+            /**
+             * si el dato que tiene el ayudante de la locacion y el codigo de la locacion es igual a la locacion del niño
+             */
             if (temp.getData().getLocation().getCode().equals(location)){
+                /**
+                 * adicionamos a la lista los niños que tenemos con el grado y el genero  valiadndo que sea lo que tiene el ayudante
+                 */
                 boysByGradeByaGenderDTOS.add(getboysByGradeByaGenderDTO(temp.getData().getGender()));
+                /**
+                 * aumentamos la variable que tenemos para llevar el conteo
+                 */
                 count++;
             }
+            /**
+             * el ahyudante sigue recorriendo la lista
+             */
             temp = temp.getNext();
         }
        BoysByLocationByGenderDTO boysByLocationByGenderDTO = new BoysByLocationByGenderDTO(location);
+        /**
+         * retornamos la lista de los niños por genero y locacion
+         */
         return boysByLocationByGenderDTO;
     }
 }
