@@ -168,9 +168,21 @@ public class ListaDeService {
         //Recorrer todas las location parado en una location el metodo de la lista
         return new ResponseEntity<>(new ResponseDTO("Satisfactorio", gradesByLocationDTOS, null),HttpStatus.OK);
     }
+
+    public ResponseEntity<ResponseDTO> getGenderByLocation()throws ListaDeException{
+        List<GradesByLocationDTO> gradesByLocationDTOS = new ArrayList<>();
+        for (Location loc: locations){
+            gradesByLocationDTOS.add(listBoys.gradesByLocationDTO(loc));
+        }
+        return new ResponseEntity<>(new ResponseDTO("Satisfactorio",gradesByLocationDTOS , null), HttpStatus.OK);
+    }
     public ResponseEntity<ResponseDTO> orderListInvertBoys() throws ListaDeException{
         listBoys.orderListInvertBoys();
         return new ResponseEntity<>(new ResponseDTO("Satisfactorio",listBoys.getHead(), null), HttpStatus.OK);
+    }
+    public ResponseEntity<ResponseDTO> getboysByLocationByGenderDTO(){
+        List<BoysByGradeByaGenderDTO>boysByGradeByaGenderDTOS = new ArrayList<>();
+        return new ResponseEntity<>(new ResponseDTO("Satisfactorio", boysByGradeByaGenderDTOS,null),HttpStatus.OK);
     }
 
 }

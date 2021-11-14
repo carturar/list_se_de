@@ -104,4 +104,15 @@ public class BoysControllerDe {
     public ResponseEntity<ResponseDTO>orderListInvertBoys() throws ListaDeException
     {return listsDeService.orderListInvertBoys();}
 
+    @GetMapping(path = "boysbygenderlocation")
+    public ResponseEntity<ResponseDTO> getGenderByLocation()
+    { return listsDeService.getBoysByLocation();}
+
+    @GetMapping (path = "getorphanbygradesbylocation")
+    public  ResponseEntity<ResponseDTO>getOrphanByGradesByLocation()
+    {return  listsDeService.getOrphanByGradesByLocation();}
+
+    @GetMapping(path = "getboysbylocationbygender")
+    public ResponseEntity<ResponseDTO>getboysByLocationByGenderDTO()
+    {return listsDeService.getboysByLocationByGenderDTO();}
 }

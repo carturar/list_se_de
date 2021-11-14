@@ -18,6 +18,7 @@ import java.util.List;
 
 import static com.umanizales.lists_prog2.model.Gender.FEMENINO;
 import static com.umanizales.lists_prog2.model.Gender.MASCULINO;
+import static java.lang.Enum.valueOf;
 
 
 @Data
@@ -826,6 +827,7 @@ public class ListaDE {
 
     /**
      * Metodo por el cual retornara una lista con los niños de primero y las niñas de segundo invirtiendo la lista de los niños
+     * codigo estudiante 82202028330 n
      * @throws ListaDeException
      */
     public void orderListInvertBoys() throws ListaDeException {
@@ -869,6 +871,42 @@ public class ListaDE {
          * en la cabeza coloque la lista temporal que se creo
          */
         this.head = listTemp.head;
+        throw new ListaDeException("No hay datos en la lista");
     }
 
+    public BoysByGradeRhDTO getBoysByGenderRh(byte grade) {
+         Node temp = this.head;
+        String rh = ""; int count = 0;
+        while (temp != null){
+            if (temp.getData().getGrade() == grade){
+                if (!rh.contains(temp.getData().getRh())){
+                    rh = rh+ "," + temp.getData().getRh();
+                }
+                count++;
+            }
+            temp = temp.getNext();
+        }
+        return  new BoysByGradeRhDTO(grade, rh, count);
+    }
+    public  BoysByGradeByaGenderDTO getboysByGradeByaGenderDTO(Gender gender){
+        BoysByGradeRhDTO[] boysByGradeRhDTO = new BoysByGradeRhDTO[5];
+        for (byte i = 0; i < 5; i++) {
+            boysByGradeRhDTO[i] = getBoysByGenderRh((byte) (i + 1));
+        }
+        return new BoysByGradeByaGenderDTO(gender, boysByGradeRhDTO);
+    }
+    public BoysByLocationByGenderDTO boysByLocationByGenderDTO(Location location) {
+        List<BoysByGradeByaGenderDTO> boysByGradeByaGenderDTOS = new ArrayList<>();
+        int count =0;
+        Node temp = head;
+        while (temp != null){
+            if (temp.getData().getLocation().getCode().equals(location)){
+                boysByGradeByaGenderDTOS.add(getboysByGradeByaGenderDTO(temp.getData().getGender()));
+                count++;
+            }
+            temp = temp.getNext();
+        }
+       BoysByLocationByGenderDTO boysByLocationByGenderDTO = new BoysByLocationByGenderDTO(location);
+        return boysByLocationByGenderDTO;
+    }
 }

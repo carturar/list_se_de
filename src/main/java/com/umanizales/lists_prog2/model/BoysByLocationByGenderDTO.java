@@ -5,7 +5,6 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class Rh {
-   private String code;
-   private String description;
+public class BoysByLocationByGenderDTO {
+    private Location location;
 }
