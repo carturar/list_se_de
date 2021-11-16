@@ -989,49 +989,6 @@ public class ListaDE {
         this.head = listTemp.head;
         throw new ListaDeException("No hay datos en la lista");
     }
-
-    /**
-     * creammos un metodo que nos adiciona un nodo
-     * @param nodeint
-     */
-    public void addNode (Node nodeint) throws ListaDeException {
-        /**
-         * decimos que si la cabeza es igual a null no coloque lo que ya tenemos
-         */
-        if(this.head == null){
-            /**
-             * nodo int es la lista ya existente
-             *
-             */
-            this.head = nodeint;
-        }
-        /**
-         * sino
-         */
-        else {
-            /**
-             * llamamos un ayudante
-             */
-            Node temp = head;
-            /**
-             * creamos un ciclo que nos recorra la lista hasta parar en el ultimo
-             */
-            while (temp.getNext() != null) {
-                /**
-                 * ya estamos parados en el ultimo
-                 */
-                temp = temp.getNext();
-            }
-            /**
-             * le decimos a nuestro ayudante que tome el nodo
-             */
-            temp.setNext(nodeint);
-            /**
-             * el nodo agarra a su anterior que es el temp
-             */
-            nodeint.setPrevious(temp);
-        }
-    }
     /**
      * creammos un metodo que nos adiciona un nodo
      * @param nodeint recibimos como parametro el nodo
