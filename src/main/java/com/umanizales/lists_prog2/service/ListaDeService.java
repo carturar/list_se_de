@@ -4,6 +4,7 @@ import com.umanizales.lists_prog2.controller.dto.ResponseDTO;
 import com.umanizales.lists_prog2.exception.ListaDeException;
 import com.umanizales.lists_prog2.model.*;
 import com.umanizales.lists_prog2.model.listade.ListaDE;
+import com.umanizales.lists_prog2.model.listade.Node;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;

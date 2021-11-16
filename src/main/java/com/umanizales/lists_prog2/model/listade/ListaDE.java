@@ -558,18 +558,47 @@ public class ListaDE {
         }
         return count;
     }
+
+    /**
+     * metodo por el cual se cambian los extremos de la lista
+     * @throws ListaDeException
+     */
     public void changeXtremesDe() throws  ListaDeException{
+        /**
+         * si la cabeza es diferente de vacio y lo que tiene el siguiente de la cabeza es diferente de vacio
+         */
         if (this.head != null && this.head.getNext() != null) {
+            /**
+             * el niño siguiente ira a la cabeza con el dato
+             */
             Boy start = this.head.getData();
+            /**
+             * el ayudante sera la cabeza
+             */
             Node temp = head;
+            /**
+             * mientras el ayudante no vea que el sigueointe sea vacio
+             */
             while (temp.getNext() != null) {
+                /**
+                 * el ayudante sigue recorriendo la lista
+                 */
                 temp = temp.getNext();
             }
+            /**
+             *
+             */
             this.head.setData(temp.getData());
             temp.setData(start);
         }
+        /**
+         * si no
+         */
         else
         {
+            /**
+             * enviamos un mensaje donde le indiquemos al usuario el error
+             */
             throw  new ListaDeException("NO es posible ejecutar el cambio de extremos");
         }
     }
@@ -959,6 +988,133 @@ public class ListaDE {
          */
         this.head = listTemp.head;
         throw new ListaDeException("No hay datos en la lista");
+    }
+
+    /**
+     * creammos un metodo que nos adiciona un nodo
+     * @param nodeint
+     */
+    public void addNode (Node nodeint) throws ListaDeException {
+        /**
+         * decimos que si la cabeza es igual a null no coloque lo que ya tenemos
+         */
+        if(this.head == null){
+            /**
+             * nodo int es la lista ya existente
+             *
+             */
+            this.head = nodeint;
+        }
+        /**
+         * sino
+         */
+        else {
+            /**
+             * llamamos un ayudante
+             */
+            Node temp = head;
+            /**
+             * creamos un ciclo que nos recorra la lista hasta parar en el ultimo
+             */
+            while (temp.getNext() != null) {
+                /**
+                 * ya estamos parados en el ultimo
+                 */
+                temp = temp.getNext();
+            }
+            /**
+             * le decimos a nuestro ayudante que tome el nodo
+             */
+            temp.setNext(nodeint);
+            /**
+             * el nodo agarra a su anterior que es el temp
+             */
+            nodeint.setPrevious(temp);
+        }
+    }
+    /**
+     * creammos un metodo que nos adiciona un nodo
+     * @param nodeint recibimos como parametro el nodo
+     * @throws ListaDeException
+     */
+    public void addNode (Node nodeint){
+        /**
+         * decimos que si la cabeza es igual a null no adicione lo que ya tenemos
+         */
+        if(this.head == null){
+            /**
+             * nodo int es la lista ya existente
+             */
+            this.head = nodeint;
+        }
+        /**
+         * si no
+         */
+        else {
+            /**
+             * llamamos un ayudante
+             */
+            Node temp = head;
+            /**
+             * creamos un ciclo que nos recorra la lista hasta parar en el ultimo
+             */
+            while (temp.getNext() != null) {
+                /**
+                 * ya estamos parados en el ultimo
+                 */
+                temp = temp.getNext();
+            }
+            /**
+             * le decimos a nuestro ayudante que tome el nodo
+             */
+            temp.setNext(nodeint);
+            /**
+             * el nodo agarra a su anterior que es el temp
+             */
+            nodeint.setPrevious(temp);
+        }
+    }
+    /**
+     * creamos un metodo que nos de una lista por cada localizacion
+     * @param location parametro que solicita el metodo
+     * @return retorna la lista de cada lozalizacion
+     * @throws ListaDeException
+     */
+    public ListaDE listDeLocation (Location location)throws ListaDeException{
+        /**
+         * validamos que la lista tenga datos
+         */
+        validateListEmptyDe();
+        /**
+         * creamos una lista temporal
+         */
+        ListaDE listemp = new ListaDE();
+        /**
+         * llamamos un ayudante
+         */
+        Node temp = this.head;
+        /**
+         * creamos un ciclo para recorrer la lista
+         */
+        while(temp!= null){
+            /**
+             * los que sean iguales a la localizacion entregada
+             */
+            if (temp.getData().getLocation().equals(location)){
+                /**
+                 * los agrega ese dato a la lista temporal
+                 */
+                listemp.addDe(temp.getData());
+            }
+            /**
+             * nuestro ayudante pasa a el siguiente
+             */
+            temp = temp.getNext();
+        }
+        /**
+         * retornamos la lista
+         */
+        return listemp;
     }
 
     /**
