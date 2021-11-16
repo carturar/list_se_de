@@ -29,8 +29,11 @@ public class ListaDeService {
     private void  initializaLocations()
     {
         locations = new ArrayList<>();
-        locations.add(new Location("16917001", "Manizales"));
         locations.add(new Location("16917003", "Chinchina"));
+        locations.add(new Location("16917001", "Manizales"));
+        locations.add(new Location("16917002","Neira"));
+        locations.add(new Location("16917004","Villamaria"));
+
     }
 
     public void initializationGender()
